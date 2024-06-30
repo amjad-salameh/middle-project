@@ -6,23 +6,26 @@ import LockIcon from "@mui/icons-material/Lock";
 import { Link } from "react-router-dom";
 import BackButton from "../BackButton/BackButton";
 
-export default function LoginForm() {
+
+
+export default function SignupForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleSignup = (e) => {
     e.preventDefault();
     const users = JSON.parse(localStorage.getItem("users")) || [];
-    const user = users.find(
-      (user) => user.email === email && user.password === password
-    );
-    if (user) {
-      alert("Login successful!");
-      // Navigate to the home page or dashboard
-      navigate("/dashboard");
+    const userExists = users.find((user) => user.email === email);
+
+    if (userExists) {
+      alert("User already exists!");
     } else {
-      alert("Invalid email or password!");
+      users.push({ email, password });
+      localStorage.setItem("users", JSON.stringify(users));
+      
+      alert("Signup successful!");
+      navigate("/login");
     }
   };
 
@@ -30,8 +33,8 @@ export default function LoginForm() {
     <>
       <BackButton />
       <div className="wrapper">
-        <form onSubmit={handleLogin}>
-          <h1>Login</h1>
+        <form onSubmit={handleSignup}>
+          <h1>Signup</h1>
           <div className="input-box">
             <input
               type="text"
@@ -52,20 +55,11 @@ export default function LoginForm() {
             />
             <LockIcon className="icon" />
           </div>
-          <div className="remember-forgot">
-            <label>
-              <input type="checkbox" />
-              Remember me
-            </label>
-            <a href="#">Forgot password?</a>
-          </div>
-          <Link to="/card/form">
-            <button type="submit">Login</button>
-          </Link>
+          <button type="submit">Signup</button>
           <div className="register-link">
-            <p>Don't have an account?</p>
-            <Link to="/signup">
-              <button>Create account</button>
+            <p>Already have an account?</p>
+            <Link to="/card/form">
+              <button>Login</button>
             </Link>
           </div>
         </form>
