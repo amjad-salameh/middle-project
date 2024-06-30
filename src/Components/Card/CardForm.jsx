@@ -35,7 +35,7 @@ const CardForm = () => {
       <BackButton />
       <div className="card-form-wrapper">
         <form className="card-form" onSubmit={handleSubmit}>
-          <h2>Create Card</h2>
+          <h2>Add your details</h2>
           <input
             type="file"
             accept="image/*"
