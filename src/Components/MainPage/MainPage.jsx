@@ -1,9 +1,9 @@
 import  { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import "./MainPage.css"; 
+import "./MainPage.css";
 import BackButton from "../BackButton/BackButton";
-
 
 const MainPage = () => {
   const [cards, setCards] = useState([]);
@@ -43,7 +43,11 @@ const MainPage = () => {
     <>
       <BackButton />
       <div className="main-page">
-      
+        <div className="button-container">
+          <Link to="/card/form">
+            <button className="btn create-card-btn">Create New Card</button>
+          </Link>
+        </div>
         <div className="card-list">
           {cards.length > 0 ? (
             cards.map((card) => (
