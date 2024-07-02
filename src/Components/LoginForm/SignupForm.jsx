@@ -1,31 +1,61 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./LoginForm.css";
+import "./LoginForm.css"; // Assuming you have a CSS file for SignupForm styling
 import PersonIcon from "@mui/icons-material/Person";
 import LockIcon from "@mui/icons-material/Lock";
 import { Link } from "react-router-dom";
 import BackButton from "../BackButton/BackButton";
 
-
+const API_URL = "https://6683afda4102471fa4caf49e.mockapi.io/login/login";
 
 export default function SignupForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    const userExists = users.find((user) => user.email === email);
 
-    if (userExists) {
-      alert("User already exists!");
-    } else {
-      users.push({ email, password });
-      localStorage.setItem("users", JSON.stringify(users));
-      
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert("Please enter a valid email address");
+      return;
+    }
+
+    // Check if email exists
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok) {
+        throw new Error("Failed to fetch");
+      }
+      const users = await response.json();
+      const userExists = users.find((user) => user.email === email);
+
+      if (userExists) {
+        alert("User already exists!");
+        return;
+      }
+
+      // Register new user
+      const newUser = { email, password };
+      const createUserResponse = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newUser),
+      });
+
+      if (!createUserResponse.ok) {
+        throw new Error("Failed to create user");
+      }
+
       alert("Signup successful!");
-      navigate("/login");
+      navigate("/login"); // Redirect to login page after successful signup
+    } catch (error) {
+      console.error("Error during signup:", error);
+      alert("Error during signup. Please try again.");
     }
   };
 
@@ -58,7 +88,7 @@ export default function SignupForm() {
           <button type="submit">Signup</button>
           <div className="register-link">
             <p>Already have an account?</p>
-            <Link to="/card/form">
+            <Link to="/login">
               <button>Login</button>
             </Link>
           </div>

@@ -72,7 +72,7 @@ const EditCard = () => {
         `https://6682d6854102471fa4c86c77.mockapi.io/mycoach/mycoach/${id}`,
         cardData
       );
-      navigate("/mainpage"); // Redirect to main page after successful submission
+      navigate("/mainpage"); 
     } catch (error) {
       console.error("Error updating card:", error);
     }
