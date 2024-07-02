@@ -1,16 +1,37 @@
-import  { useState } from "react";
+import  { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Resizer from "react-image-file-resizer";
 import "./CardForm.css";
 
-const CardForm = () => {
+const EditCard = () => {
+  const { id } = useParams();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [certificates, setCertificates] = useState("");
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchCard = async () => {
+      try {
+        const response = await axios.get(
+          `https://6682d6854102471fa4c86c77.mockapi.io/mycoach/mycoach/${id}`
+        );
+        const card = response.data;
+        setName(card.name);
+        setPhone(card.phone);
+        setAddress(card.address);
+        setCertificates(card.certificates);
+        setImage(card.image);
+      } catch (error) {
+        console.error("Error fetching card:", error);
+      }
+    };
+
+    fetchCard();
+  }, [id]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -47,21 +68,20 @@ const CardForm = () => {
 
     try {
       console.log("Sending data:", cardData);
-      const response = await axios.post(
-        "https://6682d6854102471fa4c86c77.mockapi.io/mycoach/mycoach",
+      await axios.put(
+        `https://6682d6854102471fa4c86c77.mockapi.io/mycoach/mycoach/${id}`,
         cardData
       );
-      console.log("Card created successfully:", response.data);
       navigate("/mainpage"); // Redirect to main page after successful submission
     } catch (error) {
-      console.error("Error creating card:", error);
+      console.error("Error updating card:", error);
     }
   };
 
   return (
     <div className="card-form-wrapper">
       <form className="card-form" onSubmit={handleSubmit}>
-        <h2>Create Card</h2>
+        <h2>Edit Card</h2>
         <input
           type="text"
           placeholder="Name"
@@ -87,10 +107,10 @@ const CardForm = () => {
           onChange={(e) => setCertificates(e.target.value)}
         />
         <input type="file" onChange={handleImageChange} />
-        <button type="submit">Create Card</button>
+        <button type="submit">Update Card</button>
       </form>
     </div>
   );
 };
 
-export default CardForm;
+export default EditCard;
