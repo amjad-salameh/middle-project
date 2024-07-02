@@ -1,5 +1,5 @@
-import { useState,useEffect } from "react";
-import { Route, Routes,Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Route, Routes, Navigate } from "react-router-dom";
 import LoginForm from "./Components/LoginForm/LoginForm";
 import SignupForm from "./Components/LoginForm/SignupForm";
 import MainPage from "./Components/MainPage/MainPage";
@@ -8,14 +8,11 @@ import Card from "./Components/Card/Card";
 import CardForm from "./Components/Card/CardForm";
 import EditCard from "./Components/Card/EditCard";
 
-
-
 function App() {
-  
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem("user"));
     if (user) {
       setLoggedIn(true);
     }
@@ -30,7 +27,10 @@ function App() {
         <Route path="/card" element={<Card />} />
         <Route path="/card/form" element={<CardForm />} />
         <Route path="/edit-card/:id" element={<EditCard />} />
-          <Route path="/login" element={<LoginForm setLoggedIn={setLoggedIn} />} />
+        <Route
+          path="/login"
+          element={<LoginForm setLoggedIn={setLoggedIn} />}
+        />
         <Route
           path="/main"
           element={loggedIn ? <MainPage /> : <Navigate to="/loginForm" />}
@@ -43,6 +43,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;

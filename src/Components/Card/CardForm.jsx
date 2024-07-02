@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Resizer from "react-image-file-resizer";
@@ -36,6 +36,12 @@ const CardForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check if all fields are filled
+    if (!name || !phone || !address || !certificates || !image) {
+      alert("Please fill in all fields.");
+      return;
+    }
 
     const cardData = {
       name,
