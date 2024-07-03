@@ -59,7 +59,7 @@ const CardForm = () => {
         cardData
       );
       console.log("Card created successfully:", response.data);
-      navigate("/mainpage"); // Redirect to main page after successful submission
+      navigate("/mainpage"); 
     } catch (error) {
       console.error("Error creating card:", error);
     }

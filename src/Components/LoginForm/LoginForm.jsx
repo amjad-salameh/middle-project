@@ -16,14 +16,12 @@ export default function LoginForm() {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       alert("Please enter a valid email address");
       return;
     }
 
-    // Check if email exists
     try {
       const response = await fetch(API_URL);
       if (!response.ok) {
@@ -37,14 +35,13 @@ export default function LoginForm() {
         return;
       }
 
-      // Validate password
       if (user.password !== password) {
         alert("Invalid password");
         return;
       }
 
       alert("Login successful!");
-      // Navigate to the main page with the role set to coach
+   
       navigate("/mainpage?role=coach");
     } catch (error) {
       console.error("Error during login:", error);
@@ -87,7 +84,7 @@ export default function LoginForm() {
           </div>
           <button type="submit">Login</button>
           <div className="register-link">
-            <p>Don't have an account?</p>
+            <p>Do not have an account?</p>
             <Link to="/signup">
               <button>Create account</button>
             </Link>

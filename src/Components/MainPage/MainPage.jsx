@@ -6,7 +6,7 @@ import BackButton from "../BackButton/BackButton";
 
 const MainPage = () => {
   const [cards, setCards] = useState([]);
-  const [isCoach, setIsCoach] = useState(false); // Track if user is authenticated as coach
+  const [isCoach, setIsCoach] = useState(false); 
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -24,10 +24,10 @@ const MainPage = () => {
 
     fetchCards();
 
-    // Simulate authentication check (Replace with actual authentication logic)
+    
     const params = new URLSearchParams(location.search);
     const userRole = params.get("role");
-    setIsCoach(userRole === "coach"); // Simulate authentication based on role
+    setIsCoach(userRole === "coach");
   }, [location.search]);
 
   const deleteCard = async (id) => {
@@ -46,13 +46,13 @@ const MainPage = () => {
   };
 
   const createCard = () => {
-    navigate("/card/form"); // Navigate to the create card page
+    navigate("/card/form"); 
   };
 
   return (
     <>
       <div className="button-container">
-        {/* Conditionally render the button based on authentication status */}
+       
         {isCoach && cards.length === 0 && (
           <Link to="/card/form">
             <button className="btn create-card-btn" onClick={createCard}>
