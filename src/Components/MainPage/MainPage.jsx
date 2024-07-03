@@ -1,15 +1,20 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./MainPage.css";
 import BackButton from "../BackButton/BackButton";
 
 const MainPage = () => {
   const [cards, setCards] = useState([]);
+  const [role, setRole] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const userRole = params.get("role");
+    setRole(userRole);
+
     const fetchCards = async () => {
       try {
         const response = await axios.get(
@@ -22,7 +27,7 @@ const MainPage = () => {
     };
 
     fetchCards();
-  }, []);
+  }, [location.search]);
 
   const deleteCard = async (id) => {
     try {
@@ -41,14 +46,15 @@ const MainPage = () => {
 
   return (
     <>
-      <div className="button-container">
-        <Link to="/card/form">
-          <button className="btn create-card-btn">Create New Card</button>
-        </Link>
-      </div>
-
       <BackButton />
       <div className="main-page">
+        {role === "coach" && (
+          <div className="button-container">
+            <Link to="/card/form">
+              <button className="btn create-card-btn">Create New Card</button>
+            </Link>
+          </div>
+        )}
         <div className="card-list">
           {cards.length > 0 ? (
             cards.map((card) => (
@@ -65,20 +71,22 @@ const MainPage = () => {
                   <p>Phone: {card.phone}</p>
                   <p>Address: {card.address}</p>
                   <p>Certificates: {card.certificates}</p>
-                  <div className="card-actions">
-                    <button
-                      className="btn delete-btn"
-                      onClick={() => deleteCard(card.id)}
-                    >
-                      Delete
-                    </button>
-                    <button
-                      className="btn edit-btn"
-                      onClick={() => editCard(card.id)}
-                    >
-                      Edit
-                    </button>
-                  </div>
+                  {role === "coach" && (
+                    <div className="card-actions">
+                      <button
+                        className="btn delete-btn"
+                        onClick={() => deleteCard(card.id)}
+                      >
+                        Delete
+                      </button>
+                      <button
+                        className="btn edit-btn"
+                        onClick={() => editCard(card.id)}
+                      >
+                        Edit
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             ))

@@ -44,8 +44,8 @@ export default function LoginForm() {
       }
 
       alert("Login successful!");
-      // Navigate to the home page or dashboard
-      navigate("/MainPage");
+      // Navigate to the main page with the role set to coach
+      navigate("/mainpage?role=coach");
     } catch (error) {
       console.error("Error during login:", error);
       alert("Error during login. Please try again.");

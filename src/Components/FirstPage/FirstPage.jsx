@@ -53,7 +53,7 @@ export default function FirstPage() {
     <div>
       <h1 style={{ marginBottom: "250px", fontSize: "xxx-large" }}>My Coach</h1>
       <Stack spacing={2} direction="row">
-        <Link to="/mainpage">
+        <Link to="/mainpage?role=trainee">
           <ColorButton style={{ padding: "30px" }} variant="contained">
             TRAINEE
           </ColorButton>

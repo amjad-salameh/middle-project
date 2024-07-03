@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Resizer from "react-image-file-resizer";
 import "./CardForm.css";
+import BackButton from "../BackButton/BackButton";
 
 const CardForm = () => {
   const [name, setName] = useState("");
@@ -65,37 +66,41 @@ const CardForm = () => {
   };
 
   return (
-    <div className="card-form-wrapper">
-      <form className="card-form" onSubmit={handleSubmit}>
-        <h2>Create Card</h2>
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Phone"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Certificates"
-          value={certificates}
-          onChange={(e) => setCertificates(e.target.value)}
-        />
-        <input type="file" onChange={handleImageChange} />
-        <button type="submit">Create Card</button>
-      </form>
-    </div>
+    <>
+      <BackButton />
+
+      <div className="card-form-wrapper">
+        <form className="card-form" onSubmit={handleSubmit}>
+          <h2>Create Card</h2>
+          <input
+            type="text"
+            placeholder="Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Phone"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Certificates"
+            value={certificates}
+            onChange={(e) => setCertificates(e.target.value)}
+          />
+          <input type="file" onChange={handleImageChange} />
+          <button type="submit">Create Card</button>
+        </form>
+      </div>
+    </>
   );
 };
 
