@@ -44,12 +44,20 @@ const CardForm = () => {
       return;
     }
 
+    // Get logged-in user email
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      alert("No logged-in user found.");
+      return;
+    }
+
     const cardData = {
       name,
       phone,
       address,
       certificates,
       image,
+      email: user.email,
     };
 
     try {
@@ -59,7 +67,7 @@ const CardForm = () => {
         cardData
       );
       console.log("Card created successfully:", response.data);
-      navigate("/mainpage"); 
+      navigate("/mainpage");
     } catch (error) {
       console.error("Error creating card:", error);
     }
@@ -77,26 +85,35 @@ const CardForm = () => {
             placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            required
           />
           <input
             type="text"
             placeholder="Phone"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
+            required
           />
           <input
             type="text"
             placeholder="Address"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
+            required
           />
           <input
             type="text"
             placeholder="Certificates"
             value={certificates}
             onChange={(e) => setCertificates(e.target.value)}
+            required
           />
-          <input type="file" onChange={handleImageChange} />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            required
+          />
           <button type="submit">Create Card</button>
         </form>
       </div>

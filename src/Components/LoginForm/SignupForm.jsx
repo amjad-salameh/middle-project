@@ -1,6 +1,7 @@
+// Assuming you have a CSS file for SignupForm styling
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./LoginForm.css"; // Assuming you have a CSS file for SignupForm styling
+import "./LoginForm.css";
 import PersonIcon from "@mui/icons-material/Person";
 import LockIcon from "@mui/icons-material/Lock";
 import { Link } from "react-router-dom";
@@ -50,6 +51,9 @@ export default function SignupForm() {
       if (!createUserResponse.ok) {
         throw new Error("Failed to create user");
       }
+
+      // Save user to localStorage
+      localStorage.setItem("user", JSON.stringify(newUser));
 
       alert("Signup successful!");
       navigate("/login"); // Redirect to login page after successful signup

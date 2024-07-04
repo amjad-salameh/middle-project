@@ -1,14 +1,15 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./MainPage.css";
 import BackButton from "../BackButton/BackButton";
 
 const MainPage = () => {
   const [cards, setCards] = useState([]);
-  const [isCoach, setIsCoach] = useState(false); 
   const navigate = useNavigate();
   const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const role = queryParams.get("role");
 
   useEffect(() => {
     const fetchCards = async () => {
@@ -16,21 +17,35 @@ const MainPage = () => {
         const response = await axios.get(
           "https://6682d6854102471fa4c86c77.mockapi.io/mycoach/mycoach"
         );
-        setCards(response.data);
+        if (role === "coach") {
+          // Get logged-in user email
+          const user = JSON.parse(localStorage.getItem("user"));
+          if (user) {
+            // Filter cards to show only those belonging to the logged-in user
+            const userCards = response.data.filter(
+              (card) => card.email === user.email
+            );
+            setCards(userCards);
+          } else {
+            setCards(response.data);
+          }
+        } else {
+          // Show all cards for trainee
+          setCards(response.data);
+        }
       } catch (error) {
         console.error("Error fetching cards:", error);
       }
     };
 
     fetchCards();
+  }, [role]);
 
-    
-    const params = new URLSearchParams(location.search);
-    const userRole = params.get("role");
-    setIsCoach(userRole === "coach");
-  }, [location.search]);
+  const handleEdit = (id) => {
+    navigate(`/edit-card/${id}`);
+  };
 
-  const deleteCard = async (id) => {
+  const handleDelete = async (id) => {
     try {
       await axios.delete(
         `https://6682d6854102471fa4c86c77.mockapi.io/mycoach/mycoach/${id}`
@@ -41,67 +56,32 @@ const MainPage = () => {
     }
   };
 
-  const editCard = (id) => {
-    navigate(`/edit-card/${id}`);
-  };
-
-  const createCard = () => {
-    navigate("/card/form"); 
-  };
-
   return (
     <>
-      <div className="button-container">
-       
-        {isCoach && cards.length === 0 && (
-          <Link to="/card/form">
-            <button className="btn create-card-btn" onClick={createCard}>
-              Create New Card
-            </button>
-          </Link>
-        )}
-      </div>
-
       <BackButton />
       <div className="main-page">
+        <h1>{role === "coach" ? "My Cards" : "All Cards"}</h1>
+        {role === "coach" && cards.length === 0 && (
+          <button onClick={() => navigate("/card/form")}>Create Card</button>
+        )}
         <div className="card-list">
-          {cards.length > 0 ? (
-            cards.map((card) => (
-              <div key={card.id} className="card">
-                {card.image && (
-                  <img
-                    src={card.image}
-                    alt={card.name}
-                    className="card-image"
-                  />
-                )}
-                <div className="card-content">
-                  <h3>{card.name}</h3>
-                  <p>Phone: {card.phone}</p>
-                  <p>Address: {card.address}</p>
-                  <p>Certificates: {card.certificates}</p>
-                  {isCoach && (
-                    <div className="card-actions">
-                      <button
-                        className="btn delete-btn"
-                        onClick={() => deleteCard(card.id)}
-                      >
-                        Delete
-                      </button>
-                      <button
-                        className="btn edit-btn"
-                        onClick={() => editCard(card.id)}
-                      >
-                        Edit
-                      </button>
-                    </div>
-                  )}
+          {cards.map((card) => (
+            <div className="card" key={card.id}>
+              <h2>{card.name}</h2>
+              <p>{card.phone}</p>
+              <p>{card.address}</p>
+              <p>{card.certificates}</p>
+              {card.image && (
+                <img src={card.image} alt="Card" className="card-image" />
+              )}
+              {role === "coach" && (
+                <div className="card-actions">
+                  <button onClick={() => handleEdit(card.id)}>Edit</button>
+                  <button onClick={() => handleDelete(card.id)}>Delete</button>
                 </div>
-              </div>
-            ))
-          ) : (
-            <p>No cards available</p>
-          )}
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </>

@@ -40,8 +40,11 @@ export default function LoginForm() {
         return;
       }
 
+      // Save user to localStorage
+      localStorage.setItem("user", JSON.stringify(user));
+
       alert("Login successful!");
-   
+
       navigate("/mainpage?role=coach");
     } catch (error) {
       console.error("Error during login:", error);

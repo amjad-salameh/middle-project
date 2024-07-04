@@ -27,6 +27,7 @@ function App() {
         <Route path="/card" element={<Card />} />
         <Route path="/card/form" element={<CardForm />} />
         <Route path="/edit-card/:id" element={<EditCard />} />
+        
         <Route
           path="/login"
           element={<LoginForm setLoggedIn={setLoggedIn} />}
