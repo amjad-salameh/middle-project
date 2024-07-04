@@ -55,6 +55,7 @@ const MainPage = () => {
       console.error("Error deleting card:", error);
     }
   };
+  
 
   return (
     <>
