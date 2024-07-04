@@ -60,6 +60,7 @@ export default function LoginForm() {
           <h1>Login</h1>
           <div className="input-box">
             <input
+              style={{ color: "black" }}
               type="text"
               placeholder="Email"
               required
@@ -70,6 +71,7 @@ export default function LoginForm() {
           </div>
           <div className="input-box">
             <input
+              style={{ color: "black" }}
               type="password"
               placeholder="Password"
               required
@@ -80,10 +82,10 @@ export default function LoginForm() {
           </div>
           <div className="remember-forgot">
             <label>
-              <input type="checkbox" />
+              <input style={{ color: "black" }} type="checkbox" />
               Remember me
             </label>
-            <a href="#">Forgot password?</a>
+            <a  href="#">Forgot password?</a>
           </div>
           <button type="submit">Login</button>
           <div className="register-link">

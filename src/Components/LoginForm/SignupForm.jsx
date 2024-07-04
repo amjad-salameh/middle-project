@@ -71,6 +71,7 @@ export default function SignupForm() {
           <h1>Signup</h1>
           <div className="input-box">
             <input
+              style={{ color: "black" }}
               type="text"
               placeholder="Email"
               required
@@ -81,6 +82,7 @@ export default function SignupForm() {
           </div>
           <div className="input-box">
             <input
+              style={{ color: "black" }}
               type="password"
               placeholder="Password"
               required
