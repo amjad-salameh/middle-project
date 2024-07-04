@@ -58,8 +58,8 @@ const MainPage = () => {
 
   return (
     <>
-      <BackButton />
       <div className="main-page">
+        <BackButton />
         <h1>{role === "coach" ? "My Cards" : "All Cards"}</h1>
         {role === "coach" && cards.length === 0 && (
           <button onClick={() => navigate("/card/form")}>Create Card</button>
