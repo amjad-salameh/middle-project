@@ -73,7 +73,7 @@ const MainPage = () => {
     <>
       <div className="main-page">
         <BackButton />
-        <Button
+        <Button style={{position:"fixed"}}
           aria-controls="simple-menu"
           aria-haspopup="true"
           onClick={handleClick}
