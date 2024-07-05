@@ -116,8 +116,8 @@ const MainPage = () => {
           {cards.map((card) => (
             <div className="card" key={card.id}>
               <h2>{card.name}</h2>
-              <p>{card.phone}</p>
-              <p>{card.address}</p>
+              <p>Phone:{card.phone}</p>
+              <p>Address:{card.address}</p>
               <p>{card.certificates}</p>
               {card.image && (
                 <img src={card.image} alt="Card" className="card-image" />
