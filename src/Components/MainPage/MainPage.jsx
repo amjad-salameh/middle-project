@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
+import { Menu, MenuItem, Button } from "@mui/material";
 import "./MainPage.css";
 import BackButton from "../BackButton/BackButton";
 
 const MainPage = () => {
   const [cards, setCards] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -55,15 +57,60 @@ const MainPage = () => {
       console.error("Error deleting card:", error);
     }
   };
-  
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = (page) => {
+    setAnchorEl(null);
+    if (page) {
+      navigate(`/about/${page}`);
+    }
+  };
 
   return (
     <>
       <div className="main-page">
         <BackButton />
+        <Button
+          aria-controls="simple-menu"
+          aria-haspopup="true"
+          onClick={handleClick}
+          variant="contained"
+        >
+          Why Sports
+        </Button>
         <h1>{role === "coach" ? "My Cards" : "Trainers"}</h1>
         {role === "coach" && cards.length === 0 && (
           <button onClick={() => navigate("/card/form")}>Create Card</button>
+        )}
+        {role === "trainee" && (
+          <div>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={() => handleClose(null)}
+            >
+              <MenuItem onClick={() => handleClose("swimming")}>
+                About Swimming
+              </MenuItem>
+              <MenuItem onClick={() => handleClose("running")}>
+                About Running
+              </MenuItem>
+              <MenuItem onClick={() => handleClose("fitness-sports")}>
+                About Practicing Fitness Sports
+              </MenuItem>
+              <MenuItem onClick={() => handleClose("cycling")}>
+                About Cycling
+              </MenuItem>
+              <MenuItem onClick={() => handleClose("yoga")}>
+                About Yoga
+              </MenuItem>
+            </Menu>
+          </div>
         )}
         <div className="card-list">
           {cards.map((card) => (

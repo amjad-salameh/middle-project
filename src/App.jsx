@@ -8,6 +8,13 @@ import Card from "./Components/Card/Card";
 import CardForm from "./Components/Card/CardForm";
 import EditCard from "./Components/Card/EditCard";
 
+//AboutSport
+import AboutSwimming from "./Components/WhySport/AboutSwiming";
+import AboutRunning from "./Components/WhySport/AboutRunning";
+import AboutFitnessSports from "./Components/WhySport/AboutFitnessSports";
+import AboutCycling from "./Components/WhySport/AboutCycling";
+import AboutYoga from "./Components/WhySport/AboutYoga";
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -28,7 +35,12 @@ function App() {
         <Route path="/card" element={<Card />} />
         <Route path="/card/form" element={<CardForm />} />
         <Route path="/edit-card/:id" element={<EditCard />} />
-        
+        <Route path="/about/swimming" element={<AboutSwimming />} />
+        <Route path="/about/running" element={<AboutRunning />} />
+        <Route path="/about/fitness-sports" element={<AboutFitnessSports />} />
+        <Route path="/about/cycling" element={<AboutCycling />} />
+        <Route path="/about/yoga" element={<AboutYoga />} />
+
         <Route
           path="/login"
           element={<LoginForm setLoggedIn={setLoggedIn} />}

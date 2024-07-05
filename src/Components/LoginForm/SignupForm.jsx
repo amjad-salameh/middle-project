@@ -82,7 +82,7 @@ export default function SignupForm() {
           </div>
           <div className="input-box">
             <input
-              style={{ color: "black" }}
+            style={{ color: "black" }}
               type="password"
               placeholder="Password"
               required
