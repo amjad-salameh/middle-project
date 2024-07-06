@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Menu, MenuItem, Button } from "@mui/material";
 import "./MainPage.css";
 import BackButton from "../BackButton/BackButton";
+import Footer from "../Footer/Footer";
 
 const MainPage = () => {
   const [cards, setCards] = useState([]);
@@ -72,9 +73,15 @@ const MainPage = () => {
   return (
     <>
       <div className="main-page">
+        <img
+          src="https://cdn.pixabay.com/photo/2024/02/16/10/42/ai-generated-8577261_960_720.png"
+          alt="Logo"
+          className="logo"
+        />
         <BackButton />
         {role === "trainee" && (
-          <Button style={{position: "absolute"}}
+          <Button
+            style={{ position: "absolute", marginLeft: "10px" }}
             aria-controls="simple-menu"
             aria-haspopup="true"
             onClick={handleClick}

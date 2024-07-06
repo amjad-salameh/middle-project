@@ -21,11 +21,16 @@ h1 {
 
 /* Main Page styles */
 .main-page {
+
   width: 100%;
   padding: 20px;
+  padding-bottom: 60px; /* Add bottom padding to avoid overlap with footer */
   box-sizing: border-box;
-}
 
+}
+.logo {
+  height: 50px;
+}
 .button-container {
   position: absolute;
   top: 20px;
@@ -54,7 +59,8 @@ h1 {
   justify-content: center;
   gap: 20px;
   margin-top: 60px;
-  max-height: 80vh;
+
+  max-height: calc(80vh - 60px);
   overflow-y: auto;
   padding: 20px;
   box-sizing: border-box;
