@@ -73,14 +73,16 @@ const MainPage = () => {
     <>
       <div className="main-page">
         <BackButton />
-        <Button style={{position:"fixed"}}
-          aria-controls="simple-menu"
-          aria-haspopup="true"
-          onClick={handleClick}
-          variant="contained"
-        >
-          Why Sports
-        </Button>
+        {role === "trainee" && (
+          <Button style={{position: "absolute"}}
+            aria-controls="simple-menu"
+            aria-haspopup="true"
+            onClick={handleClick}
+            variant="contained"
+          >
+            Why Sports
+          </Button>
+        )}
         <h1>{role === "coach" ? "My Cards" : "Trainers"}</h1>
         {role === "coach" && cards.length === 0 && (
           <button onClick={() => navigate("/card/form")}>Create Card</button>
@@ -116,8 +118,8 @@ const MainPage = () => {
           {cards.map((card) => (
             <div className="card" key={card.id}>
               <h2>{card.name}</h2>
-              <p>Phone:{card.phone}</p>
-              <p>Address:{card.address}</p>
+              <p>{card.phone}</p>
+              <p>{card.address}</p>
               <p>{card.certificates}</p>
               {card.image && (
                 <img src={card.image} alt="Card" className="card-image" />
