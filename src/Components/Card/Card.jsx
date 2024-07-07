@@ -48,7 +48,10 @@ const CardForm = () => {
       image,
     };
     axios
-      .post("https://6682bf3c4102471fa4c81733.mockapi.io/thecoach", cardData)
+      .post(
+        "https://6682d6854102471fa4c86c77.mockapi.io/mycoach/mycoach",
+        cardData
+      )
       .then((response) => {
         console.log("Card created:", response.data);
         alert("Card created successfully!");

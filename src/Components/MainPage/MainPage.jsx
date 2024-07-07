@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Menu, MenuItem, Button } from "@mui/material";
 import "./MainPage.css";
 import BackButton from "../BackButton/BackButton";
-import Footer from "../Footer/Footer";
+
 
 const MainPage = () => {
   const [cards, setCards] = useState([]);
